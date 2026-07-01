@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/mvagnon/zapdev/compare/v0.3.0...v0.4.0) (2026-07-01)
+
+
+### Features
+
+* **cli:** add interactive menu and cleanup command ([6068e07](https://github.com/mvagnon/zapdev/commit/6068e073698e28203e39848c23956c656977f813))
+
 ## [0.3.0](https://github.com/mvagnon/zapdev/compare/v0.2.0...v0.3.0) (2026-07-01)
 
 
