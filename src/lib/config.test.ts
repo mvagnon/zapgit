@@ -1,0 +1,26 @@
+import { describe, expect, it } from "vitest";
+
+import { DEFAULT_MODEL, DEFAULT_OLLAMA_URL, resolveConfig } from "./config";
+
+describe("resolveConfig", () => {
+  it("falls back to defaults when nothing is set", () => {
+    expect(resolveConfig({})).toEqual({
+      ollamaUrl: DEFAULT_OLLAMA_URL,
+      model: DEFAULT_MODEL,
+    });
+  });
+
+  it("reads OLLAMA_URL and OLLAMA_MODEL from the environment", () => {
+    expect(resolveConfig({ OLLAMA_URL: "http://host:1234", OLLAMA_MODEL: "my-model" })).toEqual({
+      ollamaUrl: "http://host:1234",
+      model: "my-model",
+    });
+  });
+
+  it("prefers explicit overrides over the environment", () => {
+    expect(resolveConfig({ OLLAMA_MODEL: "env-model" }, { model: "flag-model" })).toEqual({
+      ollamaUrl: DEFAULT_OLLAMA_URL,
+      model: "flag-model",
+    });
+  });
+});
