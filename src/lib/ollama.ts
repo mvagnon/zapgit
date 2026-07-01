@@ -1,7 +1,7 @@
 import { Ollama } from "ollama";
 
 import { COMMIT_SYSTEM_PROMPT, sanitizeCommitMessage, truncateDiff } from "./commit-message";
-import type { ZapgitConfig } from "./config";
+import type { ZapdevConfig } from "./config";
 
 const REQUEST_TIMEOUT_MS = 25_000;
 
@@ -11,7 +11,7 @@ const fetchWithTimeout: typeof fetch = Object.assign(
   { preconnect: fetch.preconnect },
 );
 
-export async function generateCommitMessage(diff: string, config: ZapgitConfig): Promise<string> {
+export async function generateCommitMessage(diff: string, config: ZapdevConfig): Promise<string> {
   const client = new Ollama({ host: config.ollamaUrl, fetch: fetchWithTimeout });
 
   const response = await client.chat({

@@ -41,7 +41,7 @@ export const commitCommand = defineCommand({
     const interactive = Boolean(process.stdin.isTTY && process.stdout.isTTY);
     const config = resolveConfig(process.env, args.model ? { model: args.model } : {});
 
-    if (interactive) intro("zapgit commit");
+    if (interactive) intro("zapdev commit");
 
     await stageAll();
     const diff = await getStagedDiff();

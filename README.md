@@ -1,31 +1,31 @@
-# zapgit
+# zapdev
 
-**zapgit** — a lightweight TypeScript/Bun CLI that makes small, repetitive git chores fast and precise.
+**zapdev** — a lightweight TypeScript/Bun CLI that makes small, repetitive git chores fast and precise.
 
 ## Requirements
 
-zapgit runs on the [Bun](https://bun.sh) runtime. Install Bun first.
+zapdev runs on the [Bun](https://bun.sh) runtime. Install Bun first.
 
 ## Install
 
 ```bash
-bun add -g zapgit   # installs the `zapgit` command globally
+bun add -g zapdev   # installs the `zapdev` command globally
 ```
 
 Or run it once without installing:
 
 ```bash
-bunx zapgit commit
+bunx zapdev commit
 ```
 
 ## Usage
 
-### `zapgit commit`
+### `zapdev commit`
 
 Stages all changes (`git add -A`), asks an Ollama model for a one-line Conventional Commits message, then lets you commit, edit or cancel, and optionally push.
 
 ```bash
-zapgit commit   # `zapgit` alone works too — commit is the default command
+zapdev commit   # `zapdev` alone works too — commit is the default command
 ```
 
 | Flag | Description |
@@ -49,14 +49,14 @@ From a clone:
 
 ```bash
 bun install
-bun run zapgit      # run the CLI in dev
+bun run zapdev      # run the CLI in dev
 bun run typecheck   # tsc --noEmit
 bun run lint        # eslint
 bun run test        # vitest
 bun run build       # bundle to dist/
 ```
 
-`bun link` (after `bun run build`) exposes the local `zapgit` binary on your PATH.
+`bun link` (after `bun run build`) exposes the local `zapdev` binary on your PATH.
 
 ## Project structure
 

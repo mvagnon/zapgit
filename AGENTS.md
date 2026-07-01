@@ -1,6 +1,6 @@
-# `zapgit` Project Instructions
+# `zapdev` Project Instructions
 
-zapgit is a lightweight CLI made in TypeScript to help developers make the small repetitive git-based tasks fast, precise and even easier.
+zapdev is a lightweight CLI made in TypeScript to help developers make the small repetitive git-based tasks fast, precise and even easier.
 
 ## Dependencies
 

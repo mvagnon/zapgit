@@ -5,7 +5,7 @@ import { commitCommand } from "./commands/commit";
 
 const main = defineCommand({
   meta: {
-    name: "zapgit",
+    name: "zapdev",
     version: "0.1.0",
     description: "Fast, precise git chores from your terminal.",
   },

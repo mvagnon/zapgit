@@ -1,10 +1,10 @@
 {
-  "name": "zapgit",
+  "name": "zapdev",
   "version": "0.1.0",
   "description": "Fast, precise git chores from your terminal.",
   "type": "module",
   "bin": {
-    "zapgit": "./dist/index.js"
+    "zapdev": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -26,17 +26,17 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mvagnon/zapgit.git"
+    "url": "git+https://github.com/mvagnon/zapdev.git"
   },
-  "homepage": "https://github.com/mvagnon/zapgit#readme",
+  "homepage": "https://github.com/mvagnon/zapdev#readme",
   "bugs": {
-    "url": "https://github.com/mvagnon/zapgit/issues"
+    "url": "https://github.com/mvagnon/zapdev/issues"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "zapgit": "bun run src/index.ts",
+    "zapdev": "bun run src/index.ts",
     "build": "bun build src/index.ts --target=bun --outdir dist",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
