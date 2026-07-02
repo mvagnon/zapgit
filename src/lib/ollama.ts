@@ -1,7 +1,9 @@
 import { Ollama } from "ollama";
 
-import { COMMIT_SYSTEM_PROMPT, sanitizeCommitMessage, truncateDiff } from "./commit-message";
-import type { ZapdevConfig } from "./config";
+import { COMMIT_SYSTEM_PROMPT } from "../prompts";
+import type { CommitType } from "../types/commit";
+import type { ZapdevConfig } from "../types/config";
+import { applyCommitType, sanitizeCommitMessage, truncateDiff } from "./commit-message";
 
 const REQUEST_TIMEOUT_MS = 25_000;
 
@@ -11,8 +13,13 @@ const fetchWithTimeout: typeof fetch = Object.assign(
   { preconnect: fetch.preconnect },
 );
 
-export async function generateCommitMessage(diff: string, config: ZapdevConfig): Promise<string> {
+export async function generateCommitMessage(
+  diff: string,
+  config: ZapdevConfig,
+  type?: CommitType,
+): Promise<string> {
   const client = new Ollama({ host: config.ollamaUrl, fetch: fetchWithTimeout });
+  const systemPrompt = type ? applyCommitType(COMMIT_SYSTEM_PROMPT, type) : COMMIT_SYSTEM_PROMPT;
 
   const response = await client.chat({
     model: config.model,
@@ -20,7 +27,7 @@ export async function generateCommitMessage(diff: string, config: ZapdevConfig):
     keep_alive: "30m",
     options: { temperature: 0.2 },
     messages: [
-      { role: "system", content: COMMIT_SYSTEM_PROMPT },
+      { role: "system", content: systemPrompt },
       { role: "user", content: truncateDiff(diff) },
     ],
   });

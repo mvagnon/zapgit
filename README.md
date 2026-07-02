@@ -39,8 +39,13 @@ zapdev commit
 | Flag | Description |
 | --- | --- |
 | `-m, --model <model>` | Override the Ollama model |
+| `-t, --type <type>` | Force the Conventional Commits type (`feat`, `fix`, `chore`, …) |
 | `-p, --push` | Push after committing without asking |
 | `-y, --yes` | Skip prompts and commit directly |
+
+```bash
+zapdev commit -t feat      # force the type; the model still writes scope + description
+```
 
 Without a TTY (piped / CI), it commits automatically and only pushes when `--push` is set.
 
@@ -88,3 +93,5 @@ bun run build       # bundle to dist/
 - `src/index.ts` — CLI entry (Citty); registers subcommands, defaults to `commit`.
 - `src/commands/` — one file per command.
 - `src/lib/` — pure logic (`config`, `commit-message`, `branches`, unit-tested) and side effects (`git`, `ollama`); shared helpers (`errors`).
+- `src/prompts/` — LLM prompts as `.md` files, imported as text (`with { type: "text" }`) and inlined into the bundle at build time.
+- `src/types/` — shared type declarations (one file per domain) and ambient module declarations.

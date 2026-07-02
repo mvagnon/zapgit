@@ -1,8 +1,15 @@
-export const COMMIT_SYSTEM_PROMPT = [
-  "Generate ONE commit message in Conventional Commits format.",
-  'A single line: "type(scope): description", imperative, English, ≤72 chars.',
-  "Reply ONLY with the message, no backticks, no quotes, no explanation.",
-].join("\n");
+import { COMMIT_TYPES, type CommitType } from "../types/commit";
+
+export function normalizeCommitType(input: string): CommitType | null {
+  const normalized = input.trim().toLowerCase();
+  return (COMMIT_TYPES as readonly string[]).includes(normalized)
+    ? (normalized as CommitType)
+    : null;
+}
+
+export function applyCommitType(systemPrompt: string, type: CommitType): string {
+  return `${systemPrompt}\n\nThe type MUST be exactly "${type}".`;
+}
 
 export const MAX_DIFF_CHARS = 12_000;
 

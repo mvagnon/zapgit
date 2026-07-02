@@ -1,7 +1,4 @@
-export type ZapdevConfig = {
-  ollamaUrl: string;
-  model: string;
-};
+import type { ZapdevConfig } from "../types/config";
 
 export const DEFAULT_OLLAMA_URL = "http://localhost:11434";
 export const DEFAULT_MODEL = "deepseek-v4-flash:cloud";

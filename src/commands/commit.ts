@@ -1,6 +1,7 @@
 import { defineCommand } from "citty";
 import { cancel, confirm, intro, isCancel, log, outro, select, spinner, text } from "@clack/prompts";
 
+import { normalizeCommitType } from "../lib/commit-message";
 import { resolveConfig } from "../lib/config";
 import {
   commit as gitCommit,
@@ -13,6 +14,7 @@ import {
 } from "../lib/git";
 import { errorMessage } from "../lib/errors";
 import { generateCommitMessage } from "../lib/ollama";
+import { COMMIT_TYPES } from "../types/commit";
 
 type CommitAction = "commit" | "edit" | "cancel";
 
@@ -26,6 +28,11 @@ export const commitCommand = defineCommand({
       type: "string",
       alias: "m",
       description: "Override the Ollama model (defaults to $OLLAMA_MODEL).",
+    },
+    type: {
+      type: "string",
+      alias: "t",
+      description: `Force the Conventional Commits type (${COMMIT_TYPES.join(", ")}).`,
     },
     push: {
       type: "boolean",
@@ -42,6 +49,13 @@ export const commitCommand = defineCommand({
     const interactive = Boolean(process.stdin.isTTY && process.stdout.isTTY);
     const config = resolveConfig(process.env, args.model ? { model: args.model } : {});
 
+    const type = args.type ? normalizeCommitType(args.type) : undefined;
+    if (type === null) {
+      log.error(`Invalid type "${args.type}". Valid types: ${COMMIT_TYPES.join(", ")}.`);
+      process.exitCode = 1;
+      return;
+    }
+
     if (interactive) intro("zapdev commit");
 
     await stageAll();
@@ -57,7 +71,7 @@ export const commitCommand = defineCommand({
 
     let message: string;
     try {
-      message = await generateCommitMessage(diff, config);
+      message = await generateCommitMessage(diff, config, type);
     } catch (error) {
       loader?.error("Generation failed");
       log.error(`Generation failed (machine unreachable?): ${errorMessage(error)}`);

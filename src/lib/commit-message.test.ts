@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { MAX_DIFF_CHARS, sanitizeCommitMessage, truncateDiff } from "./commit-message";
+import {
+  applyCommitType,
+  MAX_DIFF_CHARS,
+  normalizeCommitType,
+  sanitizeCommitMessage,
+  truncateDiff,
+} from "./commit-message";
 
 describe("truncateDiff", () => {
   it("returns the diff unchanged when under the limit", () => {
@@ -33,5 +39,33 @@ describe("sanitizeCommitMessage", () => {
 
   it("returns an empty string for empty input", () => {
     expect(sanitizeCommitMessage("")).toBe("");
+  });
+});
+
+describe("normalizeCommitType", () => {
+  it("accepts a valid type", () => {
+    expect(normalizeCommitType("feat")).toBe("feat");
+  });
+
+  it("lowercases and trims the input", () => {
+    expect(normalizeCommitType("  FEAT  ")).toBe("feat");
+  });
+
+  it("returns null for an unknown type", () => {
+    expect(normalizeCommitType("banana")).toBeNull();
+  });
+
+  it("returns null for empty input", () => {
+    expect(normalizeCommitType("")).toBeNull();
+  });
+});
+
+describe("applyCommitType", () => {
+  it("preserves the base prompt", () => {
+    expect(applyCommitType("BASE", "feat").startsWith("BASE")).toBe(true);
+  });
+
+  it("injects the forced type into the prompt", () => {
+    expect(applyCommitType("BASE", "fix")).toContain("fix");
   });
 });
