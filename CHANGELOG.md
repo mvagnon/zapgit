@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/mvagnon/zapdev/compare/v0.4.0...v0.5.0) (2026-07-02)
+
+
+### Features
+
+* **cli:** add --type flag for forced commit type ([6dc0259](https://github.com/mvagnon/zapdev/commit/6dc025933507964417e27240fadbc09cf0eabdcb))
+
 ## [0.4.0](https://github.com/mvagnon/zapdev/compare/v0.3.0...v0.4.0) (2026-07-01)
 
 
