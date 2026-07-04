@@ -1,5 +1,15 @@
 import { defineCommand } from "citty";
-import { cancel, confirm, intro, isCancel, log, outro, select, spinner, text } from "@clack/prompts";
+import {
+  cancel,
+  confirm,
+  intro,
+  isCancel,
+  log,
+  outro,
+  select,
+  spinner,
+  text,
+} from "@clack/prompts";
 
 import { normalizeCommitType } from "../lib/commit-message";
 import { resolveConfig } from "../lib/config";
@@ -21,7 +31,8 @@ type CommitAction = "commit" | "edit" | "cancel";
 export const commitCommand = defineCommand({
   meta: {
     name: "commit",
-    description: "Stage all changes and commit with an LLM-generated Conventional Commits message.",
+    description:
+      "Stage all changes and commit with an LLM-generated Conventional Commits message.",
   },
   args: {
     model: {
@@ -47,11 +58,16 @@ export const commitCommand = defineCommand({
   },
   async run({ args }) {
     const interactive = Boolean(process.stdin.isTTY && process.stdout.isTTY);
-    const config = resolveConfig(process.env, args.model ? { model: args.model } : {});
+    const config = resolveConfig(
+      process.env,
+      args.model ? { model: args.model } : {},
+    );
 
     const type = args.type ? normalizeCommitType(args.type) : undefined;
     if (type === null) {
-      log.error(`Invalid type "${args.type}". Valid types: ${COMMIT_TYPES.join(", ")}.`);
+      log.error(
+        `Invalid type "${args.type}". Valid types: ${COMMIT_TYPES.join(", ")}.`,
+      );
       process.exitCode = 1;
       return;
     }
@@ -67,14 +83,16 @@ export const commitCommand = defineCommand({
     }
 
     const loader = interactive ? spinner() : undefined;
-    loader?.start("Generating commit message…");
+    loader?.start("Generating commit message");
 
     let message: string;
     try {
       message = await generateCommitMessage(diff, config, type);
     } catch (error) {
       loader?.error("Generation failed");
-      log.error(`Generation failed (machine unreachable?): ${errorMessage(error)}`);
+      log.error(
+        `Generation failed (machine unreachable?): ${errorMessage(error)}`,
+      );
       process.exitCode = 1;
       return;
     }
@@ -108,7 +126,10 @@ export const commitCommand = defineCommand({
       }
 
       if (action === "edit") {
-        const edited = await text({ message: "Edit message", initialValue: message });
+        const edited = await text({
+          message: "Edit message",
+          initialValue: message,
+        });
         if (isCancel(edited)) {
           cancel("Cancelled (changes left staged).");
           return;
@@ -136,7 +157,7 @@ export const commitCommand = defineCommand({
 
     if (shouldPush) {
       const pushLoader = interactive ? spinner() : undefined;
-      pushLoader?.start("Pushing…");
+      pushLoader?.start("Pushing");
       try {
         if (await hasUpstream()) await push();
         else await pushSetUpstream(await currentBranch());
