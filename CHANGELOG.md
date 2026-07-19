@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/mvagnon/zapdev/compare/v0.7.0...v0.7.1) (2026-07-19)
+
+
+### Bug Fixes
+
+* **reset:** support operating on a single repo or child repos ([0549bc3](https://github.com/mvagnon/zapdev/commit/0549bc342347e443115efbffacf55bc19d9c49e6))
+
 ## [0.7.0](https://github.com/mvagnon/zapdev/compare/v0.6.0...v0.7.0) (2026-07-19)
 
 
