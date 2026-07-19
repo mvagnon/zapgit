@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/mvagnon/zapdev/compare/v0.7.1...v0.8.0) (2026-07-19)
+
+
+### Features
+
+* **commit:** add --pull flag to rebase before push ([8639036](https://github.com/mvagnon/zapdev/commit/86390367d96582de0a23083400cdb156e82a3f5e))
+
 ## [0.7.1](https://github.com/mvagnon/zapdev/compare/v0.7.0...v0.7.1) (2026-07-19)
 
 
