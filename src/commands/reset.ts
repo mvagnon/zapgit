@@ -18,7 +18,7 @@ import {
   defaultBranch,
   deleteBranch,
   fetchPrune,
-  findChildRepos,
+  findRepos,
   listWorktrees,
   localBranches,
   pull,
@@ -35,14 +35,14 @@ export const resetCommand = defineCommand({
   meta: {
     name: "reset",
     description:
-      "Switch every child repo to a branch, then delete all other local branches and worktrees.",
+      "Switch each repo to a branch, then delete all other local branches and worktrees.",
   },
   args: {
     path: {
       type: "positional",
       required: false,
       default: ".",
-      description: "Parent directory whose direct child repos are reset.",
+      description: "A git repo to reset, or a directory whose direct child repos are reset.",
     },
     principal: {
       type: "boolean",
@@ -76,9 +76,9 @@ export const resetCommand = defineCommand({
 
     if (interactive) intro("zapdev reset");
 
-    const repos = await findChildRepos(path);
+    const repos = await findRepos(path);
     if (repos.length === 0) {
-      log.warn(`No child git repository found under ${path}.`);
+      log.warn(`No git repository found at or under ${path}.`);
       if (interactive) outro("Nothing to do.");
       return;
     }

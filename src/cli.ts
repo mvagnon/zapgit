@@ -14,7 +14,7 @@ type CommandName = keyof typeof commands;
 
 const MENU: Record<CommandName, string> = {
   commit: "Stage all changes and commit with an AI-generated message",
-  reset: "Switch child repos to a branch and delete the other branches and worktrees",
+  reset: "Switch repos to a branch and delete the other branches and worktrees",
 };
 
 const menuOptions = (Object.keys(MENU) as CommandName[]).map((value) => ({

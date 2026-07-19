@@ -47,11 +47,11 @@ Without a TTY (piped / CI), it commits automatically and only pushes when `--pus
 
 ### `zapdev reset`
 
-Scans a directory for its **direct child** git repos (level 1, non-recursive). For each one: `git fetch --prune`, switch to a branch (chosen interactively, or forced with `--principal` / `--target`), then permanently delete every other local branch and every linked worktree. The principal branch (from `origin/HEAD`) and the branch you switched to are always kept. Ends with an optional `pull`.
+Operates on a git repo, or — when the path is a plain directory — on its **direct child** repos (level 1, non-recursive). For each one: `git fetch --prune`, switch to a branch (chosen interactively, or forced with `--principal` / `--target`), then permanently delete every other local branch and every linked worktree. The principal branch (from `origin/HEAD`) and the branch you switched to are always kept. Ends with an optional `pull`.
 
 ```bash
-zapdev reset                 # child repos of the current directory
-zapdev reset ~/dev           # child repos of a specific directory
+zapdev reset                 # the current repo, or the child repos of the current directory
+zapdev reset ~/dev           # a repo, or the child repos of a directory
 zapdev reset -p              # switch each repo to its principal branch, no prompt
 zapdev reset -t dev          # switch each repo to `dev` (or principal if absent)
 ```

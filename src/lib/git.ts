@@ -52,16 +52,18 @@ export async function pushSetUpstream(branch: string): Promise<void> {
   await git(["push", "-u", "origin", branch]);
 }
 
-// Direct child repos only (level 1, non-recursive): each subdirectory holding a
-// `.git` entry. The parent itself is never included.
-export async function findChildRepos(parent: string): Promise<string[]> {
-  const entries = await readdir(parent, { withFileTypes: true }).catch(() => null);
+// If `path` is itself a repo, reset operates on it alone; otherwise its direct
+// child repos (level 1, non-recursive). Never recurses into a repo.
+export async function findRepos(path: string): Promise<string[]> {
+  if (await isGitRepo(path)) return [path];
+
+  const entries = await readdir(path, { withFileTypes: true }).catch(() => null);
   if (!entries) return [];
 
   const dirs = entries.filter((entry) => entry.isDirectory() && entry.name !== "node_modules");
   const repos = await Promise.all(
     dirs.map(async (entry) => {
-      const dir = join(parent, entry.name);
+      const dir = join(path, entry.name);
       return (await isGitRepo(dir)) ? dir : null;
     }),
   );
