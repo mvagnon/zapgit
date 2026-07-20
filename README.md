@@ -68,6 +68,17 @@ zapdev reset -t dev          # switch each repo to `dev` (or principal if absent
 
 Deletion is permanent: branches via `git branch -D` (force), worktrees via `git worktree remove --force`. Worktrees are removed first so the branches they held become deletable. Without a TTY, pass `--yes` — otherwise the destructive step is refused. `node_modules` is never scanned.
 
+## Shell aliases
+
+`--yes` skips every prompt, which is exactly what you want behind a short alias. Two that pay off daily — add them to `~/.zshrc` or `~/.bashrc`:
+
+```bash
+alias commit="zapdev commit --yes"                        # stage → generate message → commit, no prompts
+alias git-reset="zapdev reset --yes --principal --pull"   # switch each repo to its principal branch, wipe the rest, then pull
+```
+
+`commit` collapses the whole stage → message → commit flow into one word. `git-reset` brings a workspace back to a clean principal state in one shot — point it at a parent directory to reset every child repo at once.
+
 ## Configuration
 
 | Variable | Default | Description |
